@@ -1,0 +1,6 @@
+.vscode
+objects
+minishell
+philo
+*.o
+*.out
