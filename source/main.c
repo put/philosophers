@@ -6,7 +6,7 @@
 /*   By: mika <mika@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:10:47 by mika              #+#    #+#             */
-/*   Updated: 2025/06/04 19:18:44 by mika             ###   ########.fr       */
+/*   Updated: 2025/06/04 19:32:41 by mika             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,24 @@ bool	parse_conf(int argc, char **argv, t_config *conf)
 			&& (argc == 5 || conf->num_eat > 0));
 }
 
+void	*print_thread_id(void * arg)
+{
+	(void)arg;
+	printf("My TID: %lu\n", (unsigned long)pthread_self());
+	return (NULL);
+}
+
 int	main(int argc, char **argv)
 {
 	t_config	conf;
+	pthread_t	one;
+	pthread_t	two;
 
 	if ((argc != 5 && argc != 6) || !parse_conf(argc, argv, &conf))
 		return (printf(ARGS_ISSUE), 1);
+	print_thread_id(NULL);
+	pthread_create(&one, NULL, print_thread_id, NULL);
+	pthread_create(&two, NULL, print_thread_id, NULL);
+	pthread_join(one, NULL);
+	pthread_join(two, NULL);
 }
