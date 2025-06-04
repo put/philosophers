@@ -1,4 +1,4 @@
-NAME = minishell
+NAME = philo
 CC = cc
 SRC_DIR = source
 OBJS_DIR  = objects

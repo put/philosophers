@@ -4,3 +4,4 @@ minishell
 philo
 *.o
 *.out
+*.a
