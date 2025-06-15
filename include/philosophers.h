@@ -6,7 +6,7 @@
 /*   By: mika <mika@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:12:30 by mika              #+#    #+#             */
-/*   Updated: 2025/06/15 17:24:36 by mika             ###   ########.fr       */
+/*   Updated: 2025/06/15 20:21:35 by mika             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,12 @@ _philosopher_must_eat\e[0m]\n"
 # include <sys/time.h>
 # include <unistd.h>
 
-typedef struct s_config
+typedef struct s_config	t_config;
+typedef struct s_philo	t_philo;
+
+struct s_config
 {
+	bool			any_death;
 	int				num_phi;
 	int				die_time;
 	int				eat_time;
@@ -33,17 +37,23 @@ typedef struct s_config
 	int				num_eat;
 	long long		start_time;
 	pthread_mutex_t	*forks_pool;
-}	t_config;
+	pthread_mutex_t	print_lock;
+	pthread_mutex_t	death_lock;
+	t_philo			*philos;
+};
 
-typedef struct s_philo
+struct s_philo
 {
 	int				id;
+	int				times_ate;
 	pthread_t		thread;
-	pthread_mutex_t	l_fork;
-	pthread_mutex_t	r_fork;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	eating_lock;
+	bool			is_eating;
 	long long		last_meal;
 	t_config		*conf;
-}	t_philo;
+};
 
 bool	ft_atoi(const char *nptr, int *target);
 #endif
