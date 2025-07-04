@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mika <mika@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:12:30 by mika              #+#    #+#             */
-/*   Updated: 2025/06/15 20:21:35 by mika             ###   ########.fr       */
+/*   Updated: 2025/07/04 17:43:28 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ struct s_config
 	int				die_time;
 	int				eat_time;
 	int				sleep_time;
-	int				num_eat;
+	int				n_eat;
+	int				total_ate;
 	long long		start_time;
 	pthread_mutex_t	*forks_pool;
 	pthread_mutex_t	print_lock;
 	pthread_mutex_t	death_lock;
+	pthread_mutex_t	total_ate_lock;
 	t_philo			*philos;
 };
 
@@ -55,5 +57,20 @@ struct s_philo
 	t_config		*conf;
 };
 
-bool	ft_atoi(const char *nptr, int *target);
+bool		ft_atoi(const char *nptr, int *target);
+bool		parse_conf(int argc, char **argv, t_config *conf);
+bool		init_mutex_pool(t_config *conf);
+bool		amialive(t_philo *philo);
+bool		any_deaths(t_config *conf);
+bool		eat_limit(t_config *conf);
+void		lock_forks(t_philo *philo);
+void		unlock_forks(t_philo *philo);
+void		set_eating(t_philo *philo, bool value);
+void		*philo_routine(void *v);
+void		*death_monitor(void *v);
+void		waituntil(long long time);
+void		safeprint(t_philo *philo, char *msg);
+void		destroy_mutexes(t_config *conf);
+t_philo		*init_philo_structs(t_config *conf);
+long long	get_ms(void);
 #endif
