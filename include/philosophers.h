@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mika <mika@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:12:30 by mika              #+#    #+#             */
-/*   Updated: 2025/06/15 20:21:35 by mika             ###   ########.fr       */
+/*   Updated: 2025/08/07 16:07:14 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ struct s_config
 	int				eat_time;
 	int				sleep_time;
 	int				num_eat;
+	int				total_ate;
 	long long		start_time;
 	pthread_mutex_t	*forks_pool;
 	pthread_mutex_t	print_lock;

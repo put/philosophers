@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mika <mika@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:10:47 by mika              #+#    #+#             */
-/*   Updated: 2025/06/15 21:15:16 by mika             ###   ########.fr       */
+/*   Updated: 2025/08/07 16:11:01 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,6 @@ void	destroy_mutexes(t_config *conf)
 		pthread_mutex_destroy(&(conf->forks_pool[i++]));
 }
 
-bool	amialive(t_philo *philo)
-{
-	bool		is_eating;
-	long long	last_meal;
-
-	pthread_mutex_lock(&(philo->eating_lock));
-	is_eating = philo->is_eating;
-	last_meal = philo->last_meal;
-	pthread_mutex_unlock(&(philo->eating_lock));
-	return (!((last_meal + philo->conf->die_time < get_ms()) && !is_eating));
-}
-
 bool	any_deaths(t_config *conf)
 {
 	bool	has_deaths;
@@ -125,8 +113,26 @@ bool	any_deaths(t_config *conf)
 	return (has_deaths);
 }
 
+bool	amialive(t_philo *philo)
+{
+	bool		is_eating;
+	long long	last_meal;
+
+	pthread_mutex_lock(&(philo->eating_lock));
+	is_eating = philo->is_eating;
+	last_meal = philo->last_meal;
+	pthread_mutex_unlock(&(philo->eating_lock));
+	return (!((last_meal + philo->conf->die_time < get_ms()) && !is_eating) && !any_deaths(philo->conf));
+}
+
+
 void	lock_forks(t_philo *philo)
 {
+	if (philo->conf->num_phi == 1)
+	{
+		usleep((philo->conf->die_time) * 1000);
+		return ;
+	}
 	if (philo->id % 2)
 	{
 		pthread_mutex_lock(philo->r_fork);
@@ -151,14 +157,8 @@ void	lock_forks(t_philo *philo)
 
 void	unlock_forks(t_philo *philo)
 {
-	if (philo->id % 2)
-	{
-		pthread_mutex_unlock(philo->r_fork);
-		pthread_mutex_unlock(philo->l_fork);
-		return ;
-	}
-	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
+	pthread_mutex_unlock(philo->l_fork);
 }
 
 void	set_eating(t_philo *philo, bool value)
@@ -166,8 +166,19 @@ void	set_eating(t_philo *philo, bool value)
 	pthread_mutex_lock(&(philo->eating_lock));
 	philo->is_eating = value;
 	philo->last_meal = get_ms();
-	if (!value)
+	if (!value && philo->times_ate < philo->conf->num_eat)
+	{
 		philo->times_ate++;
+		philo->conf->total_ate++;
+		if (philo->conf->total_ate
+			>= philo->conf->num_eat * philo->conf->num_phi
+			&& philo->conf->num_eat > 0)
+		{
+			pthread_mutex_lock(&(philo->conf->death_lock));
+			philo->conf->any_death = true;
+			pthread_mutex_unlock(&(philo->conf->death_lock));
+		}
+	}
 	pthread_mutex_unlock(&(philo->eating_lock));
 }
 
@@ -176,7 +187,6 @@ void	*philo_routine(void *v)
 	t_philo	*philo;
 
 	philo = (t_philo *)v;
-	waituntil(philo->conf->start_time);
 	while (!any_deaths(philo->conf))
 	{
 		if (amialive(philo) && !any_deaths(philo->conf))
@@ -213,13 +223,10 @@ void	*death_monitor(void *v)
 				pthread_mutex_lock(&(conf->death_lock));
 				conf->any_death = true;
 				pthread_mutex_unlock(&(conf->death_lock));
-				i = -1;
-				break ;
+				return (NULL);
 			}
 			i++;
 		}
-		if (i == -1)
-			break ;
 		i = 0;
 		usleep(100);
 	}
@@ -271,12 +278,12 @@ int	main(int argc, char **argv)
 	philos = NULL;
 	if ((argc != 5 && argc != 6) || !parse_conf(argc, argv, &conf))
 		return (printf(ARGS_ISSUE), 1);
-	conf.start_time = get_ms() + (conf.num_phi * 2);
 	conf.any_death = false;
 	pthread_mutex_init(&conf.print_lock, NULL);
 	pthread_mutex_init(&conf.death_lock, NULL);
 	if (!init_mutex_pool(&conf))
 		return (1); //TODO: Do something to destroy everything :)
+	conf.start_time = get_ms();
 	philos = init_philo_structs(&conf); //TODO: has malloc, need to check if fail
 	conf.philos = philos;
 	pthread_create(&monitor, NULL, death_monitor, &conf);
