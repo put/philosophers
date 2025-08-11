@@ -6,7 +6,7 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:12:30 by mika              #+#    #+#             */
-/*   Updated: 2025/08/07 16:07:14 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/11 20:30:47 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ struct s_config
 	int				eat_time;
 	int				sleep_time;
 	int				num_eat;
-	int				total_ate;
 	long long		start_time;
 	pthread_mutex_t	*forks_pool;
 	pthread_mutex_t	print_lock;
@@ -56,5 +55,22 @@ struct s_philo
 	t_config		*conf;
 };
 
-bool	ft_atoi(const char *nptr, int *target);
+bool		ft_atoi(const char *nptr, int *target);
+bool		any_deaths(t_config *conf);
+bool		amialive(t_philo *philo);
+bool		death_each_philo(t_config *conf, bool *all_ate, int *i);
+void		*death_monitor(void *v);
+void		lock_forks(t_philo *philo);
+void		unlock_forks(t_philo *philo);
+void		set_eating(t_philo *philo, bool value);
+bool		init_mutex_pool(t_config *conf);
+void		destroy_mutexes(t_config *conf);
+bool		parse_conf(int argc, char **argv, t_config *conf);
+void		safeprint(t_philo *philo, char *msg);
+t_philo		*init_philo_structs(t_config *conf);
+void		join_philo_threads(t_config *conf);
+long long	get_ms(void);
+void		precise_sleep(long long duration);
+void		waituntil(long long time);
+void		*philo_routine(void *v);
 #endif
