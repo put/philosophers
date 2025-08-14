@@ -6,7 +6,7 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:04:25 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/11 20:35:48 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:59:18 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ bool	amialive(t_philo *philo)
 {
 	bool		is_eating;
 	long long	last_meal;
+	long long	now;
 
+	now = get_ms();
 	pthread_mutex_lock(&(philo->eating_lock));
 	is_eating = philo->is_eating;
 	last_meal = philo->last_meal;
 	pthread_mutex_unlock(&(philo->eating_lock));
-	return (!((last_meal + philo->conf->die_time < get_ms())
+	return (!((last_meal + philo->conf->die_time < now)
 			&& !is_eating) && !any_deaths(philo->conf));
 }
 
@@ -47,7 +49,7 @@ bool	death_each_philo(t_config *conf, bool *all_ate, int *i)
 			pthread_mutex_unlock(&(conf->death_lock));
 			return (false);
 		}
-		if (conf->philos[*i].times_ate < conf->num_eat)
+		if (conf->philos[*i].times_ate < conf->num_eat || conf->num_eat == 0)
 			*all_ate = false;
 		(*i)++;
 	}
@@ -62,6 +64,7 @@ void	*death_monitor(void *v)
 
 	conf = (t_config *)v;
 	i = 0;
+	waituntil(conf->start_time + conf->die_time);
 	while (!any_deaths(conf))
 	{
 		all_ate = true;

@@ -6,7 +6,7 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:00:31 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/11 20:00:46 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 15:03:59 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	set_eating(t_philo *philo, bool value)
 {
 	pthread_mutex_lock(&(philo->eating_lock));
 	philo->is_eating = value;
-	philo->last_meal = get_ms();
+	if (value)
+		philo->last_meal = get_ms();
 	if (!value)
 		philo->times_ate++;
 	pthread_mutex_unlock(&(philo->eating_lock));

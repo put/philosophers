@@ -6,7 +6,7 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:01:52 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/11 20:02:05 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 14:54:08 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ t_philo	*init_philo_structs(t_config *conf)
 	while (i < conf->num_phi)
 	{
 		philos[i].id = i + 1;
-		philos[i].last_meal = conf->start_time;
 		philos[i].conf = conf;
+		philos[i].last_meal = 0;
 		philos[i].l_fork = &(conf->forks_pool[i]);
 		philos[i].r_fork = &(conf->forks_pool[(i + 1) % conf->num_phi]);
 		philos[i].is_eating = false;
 		philos[i].times_ate = 0;
 		pthread_mutex_init(&(philos[i].eating_lock), NULL);
 		if (i % 2 == 0)
-			usleep(1250);
+			usleep(5000);
 		pthread_create(&(philos[i].thread), NULL, philo_routine, &(philos[i]));
 		i++;
 	}

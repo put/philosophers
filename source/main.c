@@ -6,7 +6,7 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:10:47 by mika              #+#    #+#             */
-/*   Updated: 2025/08/11 20:31:42 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 15:15:31 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	*philo_routine(void *v)
 	t_philo	*philo;
 
 	philo = (t_philo *)v;
+	waituntil(philo->conf->start_time);
+	pthread_mutex_lock(&(philo->eating_lock));
+	philo->last_meal = get_ms();
+	pthread_mutex_unlock(&(philo->eating_lock));
+	usleep(2000 * (philo->id % 2));
 	while (!any_deaths(philo->conf))
 	{
 		if (amialive(philo) && !any_deaths(philo->conf))
@@ -50,7 +55,7 @@ int	main(int argc, char **argv)
 	pthread_mutex_init(&conf.death_lock, NULL);
 	if (!init_mutex_pool(&conf))
 		return (1);
-	conf.start_time = get_ms();
+	conf.start_time = get_ms() + 1000;
 	philos = init_philo_structs(&conf);
 	conf.philos = philos;
 	pthread_create(&monitor, NULL, death_monitor, &conf);
