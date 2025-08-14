@@ -6,11 +6,11 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:00:31 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/14 15:59:24 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:59:41 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "philosophers.h"
 
 void	lock_forks(t_philo *philo)
 {

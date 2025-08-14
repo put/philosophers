@@ -6,11 +6,11 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:10:47 by mika              #+#    #+#             */
-/*   Updated: 2025/08/14 16:42:43 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:59:48 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "philosophers.h"
 
 void	*philo_routine(void *v)
 {
@@ -63,6 +63,5 @@ int	main(int argc, char **argv)
 	pthread_join(monitor, NULL);
 	if (philos)
 		free(philos);
-	destroy_mutexes(&conf);
 	free(conf.forks_pool);
 }

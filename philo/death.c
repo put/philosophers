@@ -6,11 +6,11 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:04:25 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/14 16:23:23 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:59:37 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "philosophers.h"
 
 bool	any_deaths(t_config *conf)
 {

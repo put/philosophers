@@ -6,11 +6,11 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:57:28 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/11 20:32:16 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:59:58 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "philosophers.h"
 
 bool	parse_conf(int argc, char **argv, t_config *conf)
 {

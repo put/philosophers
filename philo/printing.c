@@ -6,11 +6,11 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:58:41 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/14 15:19:00 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 17:00:00 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "philosophers.h"
 
 void	safeprint(t_philo *philo, char *msg)
 {

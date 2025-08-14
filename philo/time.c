@@ -6,11 +6,11 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:56:01 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/14 16:39:43 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 17:00:06 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "philosophers.h"
 
 long long	get_ms(void)
 {

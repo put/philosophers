@@ -6,11 +6,11 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:59:19 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/11 20:32:41 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:59:51 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "philosophers.h"
 
 bool	init_mutex_pool(t_config *conf)
 {
@@ -35,13 +35,4 @@ bool	init_mutex_pool(t_config *conf)
 		return (false);
 	}
 	return (true);
-}
-
-void	destroy_mutexes(t_config *conf)
-{
-	int	i;
-
-	i = 0;
-	while (i < conf->num_phi)
-		pthread_mutex_destroy(&(conf->forks_pool[i++]));
 }

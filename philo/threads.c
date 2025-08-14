@@ -6,11 +6,11 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:01:52 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/14 16:36:05 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 17:00:03 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philosophers.h"
+#include "philosophers.h"
 
 t_philo	*init_philo_structs(t_config *conf)
 {
