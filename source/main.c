@@ -6,7 +6,7 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:10:47 by mika              #+#    #+#             */
-/*   Updated: 2025/08/14 16:12:48 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:42:43 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char **argv)
 	pthread_mutex_init(&conf.death_lock, NULL);
 	if (!init_mutex_pool(&conf))
 		return (1);
-	conf.start_time = get_ms() + 1000;
+	conf.start_time = get_ms() + 1200 * (1 + (conf.num_phi > 100));
 	philos = init_philo_structs(&conf);
 	conf.philos = philos;
 	pthread_create(&monitor, NULL, death_monitor, &conf);
