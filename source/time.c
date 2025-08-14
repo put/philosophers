@@ -6,7 +6,7 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:56:01 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/11 20:32:01 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:24:19 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,14 @@ void	waituntil(long long time)
 		precise_sleep(1);
 		newtime = get_ms();
 	}
+}
+
+void	dynamicstagger(t_philo *philo)
+{
+	if (philo->conf->num_phi <= 20)
+		usleep(1000 * philo->id);
+	else if (philo->conf->num_phi <= 100)
+		usleep(500 * (philo->id % 10));
+	else
+		usleep(1500 * (philo->id % 2));
 }

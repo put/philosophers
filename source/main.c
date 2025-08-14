@@ -6,7 +6,7 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:10:47 by mika              #+#    #+#             */
-/*   Updated: 2025/08/14 15:15:31 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:12:48 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*philo_routine(void *v)
 	pthread_mutex_lock(&(philo->eating_lock));
 	philo->last_meal = get_ms();
 	pthread_mutex_unlock(&(philo->eating_lock));
-	usleep(2000 * (philo->id % 2));
+	dynamicstagger(philo);
 	while (!any_deaths(philo->conf))
 	{
 		if (amialive(philo) && !any_deaths(philo->conf))

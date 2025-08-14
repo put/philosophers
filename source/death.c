@@ -6,7 +6,7 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 20:04:25 by mschippe          #+#    #+#             */
-/*   Updated: 2025/08/14 14:59:18 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:23:23 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ bool	death_each_philo(t_config *conf, bool *all_ate, int *i)
 			pthread_mutex_unlock(&(conf->death_lock));
 			return (false);
 		}
+		pthread_mutex_lock(&conf->philos[*i].eating_lock);
 		if (conf->philos[*i].times_ate < conf->num_eat || conf->num_eat == 0)
 			*all_ate = false;
+		pthread_mutex_unlock(&conf->philos[*i].eating_lock);
 		(*i)++;
 	}
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: mschippe <mschippe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 18:12:30 by mika              #+#    #+#             */
-/*   Updated: 2025/08/14 14:59:28 by mschippe         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:16:28 by mschippe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,5 @@ long long	get_ms(void);
 void		precise_sleep(long long duration);
 void		waituntil(long long time);
 void		*philo_routine(void *v);
+void		dynamicstagger(t_philo *philo);
 #endif
